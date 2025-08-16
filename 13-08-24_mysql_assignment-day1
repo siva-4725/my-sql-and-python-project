@@ -27,3 +27,67 @@ mysql> select * from employees join departments on employees.deptid=departments.
 +-------+---------+--------+--------+------------+--------+----------+
 |   102 | Alice   |      2 |  60000 | 2019-07-10 |      2 | IT       |
 +-------+---------+--------+--------+------------+--------+----------+
+
+ 4.List employees whose salary is > 50000.
+mysql> select EmpName,salary from employees where salary>50000;
++---------+--------+
+| EmpName | salary |
++---------+--------+
+| Alice   |  60000 |
+| Bob     |  55000 |
++---------+--------+
+
+5. Find employees hired before 2020-01-01.
+mysql> select EmpName,HireDate from employees where HireDate < '2020-01-01';
++---------+------------+
+| EmpName | HireDate   |
++---------+------------+
+| John    | 2018-02-12 |
+| Alice   | 2019-07-10 |
+| Carol   | 2017-09-20 |
++---------+------------+
+
+6. Display employees in descending order of salary.
+mysql> select * from employees order by salary desc;
++-------+---------+--------+--------+------------+
+| EmpID | EmpName | DeptID | Salary | HireDate   |
++-------+---------+--------+--------+------------+
+|   102 | Alice   |      2 |  60000 | 2019-07-10 |
+|   103 | Bob     |      1 |  55000 | 2020-05-05 |
+|   101 | John    |      1 |  50000 | 2018-02-12 |
+|   104 | Carol   |      3 |  45000 | 2017-09-20 |
++-------+---------+--------+--------+------------+
+
+7. Count total number of employees.
+mysql> select count(*) AS TotalEmployees from employees;
++----------------+
+| TotalEmployees |
++----------------+
+|              4 |
++----------------+
+
+8. Find the avg sal of all employees.
+mysql> select avg(salary) AS AverageSalary from employees;
++---------------+
+| AverageSalary |
++---------------+
+|    52500.0000 |
++---------------+
+
+9. Find max sal in each department.
+mysql> select DeptID,Max(salary) AS MaximumSalary from employees group by DeptID;
++--------+---------------+
+| DeptID | MaximumSalary |
++--------+---------------+
+|      1 |         55000 |
+|      2 |         60000 |
+|      3 |         45000 |
++--------+---------------+
+
+10. Find departments having more than 1 employee.
+mysql> select DeptID,count(*) AS No_of_Employees from employees group by DeptID having count(*) > 1;
++--------+-----------------+
+| DeptID | No_of_Employees |
++--------+-----------------+
+|      1 |               2 |
++--------+-----------------+
