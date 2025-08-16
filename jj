@@ -1,0 +1,51 @@
+11. Display employees whose name start with 'A'.
+mysql> select * from employees where empname like 'A%';
++-------+---------+--------+--------+------------+
+| EmpID | EmpName | DeptID | Salary | HireDate   |
++-------+---------+--------+--------+------------+
+|   102 | Alice   |      2 |  60000 | 2019-07-10 |
++-------+---------+--------+--------+------------+
+
+12. Find employees whose salary is b/w 45,000 and 60,000.
+mysql> select * from employees where salary >=45000 and salary <= 60000;
++-------+---------+--------+--------+------------+
+| EmpID | EmpName | DeptID | Salary | HireDate   |
++-------+---------+--------+--------+------------+
+|   101 | John    |      1 |  50000 | 2018-02-12 |
+|   102 | Alice   |      2 |  60000 | 2019-07-10 |
+|   103 | Bob     |      1 |  55000 | 2020-05-05 |
+|   104 | Carol   |      3 |  45000 | 2017-09-20 |
++-------+---------+--------+--------+------------+
+
+13. Show the department name of each employee (JOIN query).
+mysql> select * from employees JOIN departments ON employees.deptid = departments.deptid;
++-------+---------+--------+--------+------------+--------+----------+
+| EmpID | EmpName | DeptID | Salary | HireDate   | DeptID | DeptName |
++-------+---------+--------+--------+------------+--------+----------+
+|   101 | John    |      1 |  50000 | 2018-02-12 |      1 | HR       |
+|   102 | Alice   |      2 |  60000 | 2019-07-10 |      2 | IT       |
+|   103 | Bob     |      1 |  55000 | 2020-05-05 |      1 | HR       |
+|   104 | Carol   |      3 |  45000 | 2017-09-20 |      3 | Sales    |
++-------+---------+--------+--------+------------+--------+----------+
+
+14. Find the no.of employees in each department.
+mysql> select departments.deptid,departments.deptname, count(*) as NumEmployees from employees join departments on employees.deptid = departments.deptid group by departments.DeptID,departments.DeptName;
++--------+----------+--------------+
+| deptid | deptname | NumEmployees |
++--------+----------+--------------+
+|      1 | HR       |            2 |
+|      2 | IT       |            1 |
+|      3 | Sales    |            1 |
++--------+----------+--------------+
+
+15. Display all employees, including those without a department(LEFT JOIN).
+mysql> select employees.*,departments.DeptName from employees LEFT JOIN departments ON employees.DeptID = departments.DeptID;
++-------+---------+--------+--------+------------+----------+
+| EmpID | EmpName | DeptID | Salary | HireDate   | DeptName |
++-------+---------+--------+--------+------------+----------+
+|   101 | John    |      1 |  50000 | 2018-02-12 | HR       |
+|   102 | Alice   |      2 |  60000 | 2019-07-10 | IT       |
+|   103 | Bob     |      1 |  55000 | 2020-05-05 | HR       |
+|   104 | Carol   |      3 |  45000 | 2017-09-20 | Sales    |
+|   105 | Tom     |   NULL |  40000 | 2021-04-11 | NULL     |
++-------+---------+--------+--------+------------+----------+
